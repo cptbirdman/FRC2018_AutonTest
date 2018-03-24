@@ -39,6 +39,9 @@ public class Robot /*extends IterativeRobot*/ implements RobotInterface {
 	DigitalInput beamBreak;*/
 	
 	//UsbCamera backCamera = CameraServer.getInstance().startAutomaticCapture("intake", "/dev/v4l/by-path/platform-ci_hdrc.0-usb-0:1.2:1.0-video-index0");
+	public int moveX;
+	public int moveY;
+	public int facingO;
 	
 	int contourNumber = 0;
 	
@@ -179,7 +182,7 @@ public class Robot /*extends IterativeRobot*/ implements RobotInterface {
 	//SendableChooser<String> autonAllianceChoose;
 	String autonAlliance;
 	
-	private Auton rr;
+	public Auton rr;
 	
 	public void runAuton() {
 		//run the loop which has the logic to tell us what to do
@@ -279,6 +282,7 @@ public class Robot /*extends IterativeRobot*/ implements RobotInterface {
 		
 		if ((System.currentTimeMillis() - autonPlaceCubeTime) <= time) {
 			outakeUpperRamp(1);
+			System.out.println("Place Cube");
 		} else {
 			outakeUpperRamp(1);
 			autonPlaceCubeDone = true;
@@ -291,6 +295,7 @@ public class Robot /*extends IterativeRobot*/ implements RobotInterface {
 			firstTimeAuton = false;
 			autonCrossTime = System.currentTimeMillis();
 			autonForwardDone = false;
+			System.out.println("Foward");
 		}
 		
 		if ((System.currentTimeMillis() - autonCrossTime) <= ((distance / inchPerSecond) * 1000) + autonCrossWait && (System.currentTimeMillis() - autonCrossTime) >= autonCrossWait) {
@@ -311,6 +316,7 @@ public class Robot /*extends IterativeRobot*/ implements RobotInterface {
 			firstTimeAuton = false;
 			autonCrossTime = System.currentTimeMillis();
 			autonReverseDone = false;
+			System.out.println("Reverse");
 		}
 		
 		if ((System.currentTimeMillis() - autonCrossTime) <= ((distance / inchPerSecond) * 1000) + autonCrossWait && (System.currentTimeMillis() - autonCrossTime) >= autonCrossWait) {
@@ -327,7 +333,8 @@ public class Robot /*extends IterativeRobot*/ implements RobotInterface {
 	
 	@Override
 	public void autonTurn(double turnAngle, boolean flip) {
-
+		autonTurnDone = true;
+		System.out.println("Turn " + Double.toString(turnAngle));
 	}
 	
 	public void autonomousInit() {
@@ -338,7 +345,7 @@ public class Robot /*extends IterativeRobot*/ implements RobotInterface {
 		//gameData = DriverStation.getInstance().getGameSpecificMessage();
 		
 
-					switchSide = "right";
+					
 
 		
 		//autonCrossDistance = SmartDashboard.getNumber("Auton Cross Distance", 119.0);
@@ -352,17 +359,14 @@ public class Robot /*extends IterativeRobot*/ implements RobotInterface {
 		resetDistanceAndYaw();
 		
 		//autonModeLeft = autonChooseLeft.getSelected();
-		autonModeRight = "cross";//autonChooseRight.getSelected();
-		robotPosition = 1;//robotPositionChoose.getSelected();
-		switchPosition = "front";//switchPositionChoose.getSelected();
-		autonAlliance = "blue";//autonAllianceChoose.getSelected();*/
+
 	}
 	
 
 	public void autonomousPeriodic() {
 		//driveTrainShift.set(DoubleSolenoid.Value.kOff);
 		//updateEncoders();
-		//autonWait = SmartDashboard.getNumber("Auton Wait Choose", 0.0);
+		//SmartDashboard.getNumber("Auton Wait Choose", 0.0);
 		runAuton();
 	}
 	

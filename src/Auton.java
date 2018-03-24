@@ -1,4 +1,7 @@
+//package org.usfirst.frc.team4454.robot;
 
+//import org.usfirst.frc.team4454.robot.Robot;
+//import org.usfirst.frc.team4454.robot.RobotInterface;
 
 public class Auton {
 	//a reference to the parent class
@@ -10,33 +13,36 @@ public class Auton {
 		autonHasWait = 0;
 		autonStep = "wait";
 		robot = robot2;
+		savedAutonStep = "";
 	}
 	
 	boolean startStep;
 	boolean firstRun;
 	double autonHasWait;
 	String autonStep;
+	String savedAutonStep;
 	
 	/**
 	 * This is where the if-statements would go to decide when and what to do.
 	 */
 	public void Run() {
+		
 		if (firstRun) {
 			firstRun = false;
-			System.out.println("first run");
+			//System.out.println("first run");
 		}
 		
-		double pivotPoint = 27;
+		double pivotPoint = 0; // 27
 		
 		String switchSide = robot.autonSwitchPosition();
 		String cubePlacement = robot.autonSwitchSide();
 		int robotPosition = robot.autonRobotPosition();
 		double autonWait = robot.getAutonWait();
 		String autonMode = robot.autonGetMode();
-		System.out.println(switchSide);
-		System.out.println(autonMode);
-		System.out.println(autonStep);
-		System.out.println(robotPosition);
+		//System.out.println(switchSide);
+		//System.out.println(autonMode);
+		//System.out.println(autonStep);
+		//System.out.println(robotPosition);
 		switch (autonMode) {
 				case "cross": // Cross
 					switch (autonStep) {
@@ -44,31 +50,48 @@ public class Auton {
 							if (startStep) {
 								autonHasWait = System.currentTimeMillis();
 								startStep = false;
-								System.out.println("started wait");
+								//System.out.println("started wait");
 							}
-							
-							if ((autonWait * 1000) <= (autonHasWait - System.currentTimeMillis())) {
+							//System.out.println(Double.toString(autonWait*1000) + " <= " + Double.toString(System.currentTimeMillis() - autonHasWait));
+							if ((autonWait * 1000) <= (System.currentTimeMillis() - autonHasWait)) {
 								startStep = true;
 								autonStep = "firstForward";
+								//System.out.println("done wait");
 							}
 							break;
 						case "firstForward":
+							//System.out.println("start step: " + startStep);
 							if (startStep) {
 								robot.firstTimeAuton(true);
 								startStep = false;
-								System.out.println("started forward");
+								//System.out.println("started forward");
 							}
 							
 							if (!robot.autonForward_Done()) {
-								robot.autonForward(121.5, true);
+								//System.out.println("moving");
+								robot.autonForward(151.5, true);// 121.5
+							} else {
+								robot.firstTimeAuton(true);
+								autonStep = "end";
+							}
+							break;
+						/*case "place":
+							if (!robot.autonPlaceCube_Done()) {
+								if ((robotPosition == 2 && cubePlacement == "left") || (robotPosition == 3 && cubePlacement == "right")) {
+									robot.autonPlaceCube(3000);
+									System.out.println("placing");
+								} else {
+									autonStep = "end";
+									System.out.println("ended");
+								}
 							} else {
 								autonStep = "end";
 								System.out.println("ended");
-							}
-							break;
+							}*/
 						case "end":
 							break;
 					}
+					break;
 				case "place": // Place
 					switch (switchSide) {
 							
@@ -85,7 +108,7 @@ public class Auton {
 										startStep = false;
 									}
 									
-									if ((autonWait * 1000) <= (autonHasWait - System.currentTimeMillis())) {
+									if ((autonWait * 1000) <= (System.currentTimeMillis() - autonHasWait)) {
 										autonStep = "firstForward";
 										startStep = true;
 									}
@@ -177,14 +200,14 @@ public class Auton {
 											robot.autonForward(50, true);
 										}
 									} else {
-										autonStep = "place";
+										autonStep = "end";
 										startStep = true;
 									}
 									
 									break;
 								case "place":
 									if (!robot.autonPlaceCube_Done()) {
-										robot.autonPlaceCube(5); // todo: correct time
+										robot.autonPlaceCube(2000); // todo: correct time
 									} else {
 										autonStep = "end";
 										startStep = true;
@@ -207,7 +230,7 @@ public class Auton {
 										startStep = false;
 									}
 									
-									if ((autonWait * 1000) <= (autonHasWait - System.currentTimeMillis())) {
+									if ((autonWait * 1000) <= (System.currentTimeMillis() - autonHasWait)) {
 										autonStep = "firstForward";
 										startStep = true;
 									}
@@ -321,9 +344,19 @@ public class Auton {
 				case "switch": // Switch
 					break;
 				default:
-					System.out.println("Invalid Mode");
+					//System.out.println("Invalid Mode");
 					//adaptiveDrive(0, 0);
 					break;
 		}
+		if( autonStep == "end" && savedAutonStep != "end")
+		{
+			System.out.println("end");
+		}
+		if( autonStep == "wait" && savedAutonStep != "wait")
+		{
+			System.out.println("wait");
+		}
+				
+		savedAutonStep = autonStep;
 	}	
 }
