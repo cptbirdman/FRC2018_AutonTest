@@ -12,10 +12,10 @@ public class RunningRobot {
 		
 		r.autonomousInit();
 		
-		r.switchSide = "left";
-		r.autonModeRight = "cross";
-		r.autonModeLeft = "cross";
-		r.robotPosition = 1;
+		r.switchSide = "right";
+		r.autonModeRight = "crossPlace";
+		r.autonModeLeft = "crossPlace";
+		r.robotPosition = 3;
 		r.switchPosition = "front";
 		r.autonAlliance = "blue";
 		r.autonWait = 1.0;
@@ -24,6 +24,11 @@ public class RunningRobot {
 		while( r.rr.autonStep != "end")
 		{
 			r.autonomousPeriodic();
+		}
+		
+		if( r.placed )
+		{
+			System.out.println("placed");
 		}
 	}
 

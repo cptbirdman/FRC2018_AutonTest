@@ -100,14 +100,14 @@ public class Auton {
 						if (!robot.autonPlaceCube_Done()) {
 							if ((robotPosition == 2 && cubePlacement == "left") || (robotPosition == 3 && cubePlacement == "right")) {
 								robot.autonPlaceCube(3000);
-								System.out.println("placing");
+								//System.out.println("placing");
 							} else {
 								autonStep = "end";
-								System.out.println("ended");
+								//System.out.println("ended");
 							}
 						} else {
 							autonStep = "end";
-							System.out.println("ended");
+							//System.out.println("ended");
 						}
 					case "end":
 						break;

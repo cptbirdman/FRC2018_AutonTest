@@ -139,7 +139,7 @@ public class Robot implements RobotInterface {
     
     //Encoder encLeft;
 	//Encoder encRight;
-	
+	boolean placed = false;
 	int countR;
 	double rawDistanceR;
 	double distanceR;
@@ -555,6 +555,8 @@ public class Robot implements RobotInterface {
 	
 	
 	public void autonPlaceCube(double time) {
+		time = 0;
+		//System.out.println("placed");
 		if (firstTimeAuton) {
 			autonPlaceCubeDone = false;
 			autonPlaceCubeTime = System.currentTimeMillis();
@@ -563,9 +565,11 @@ public class Robot implements RobotInterface {
 		
 		if ((System.currentTimeMillis() - autonPlaceCubeTime) <= time) {
 			outakeUpperRamp(1);
+			placed = true;
 		} else {
 			outakeUpperRamp(0);
 			autonPlaceCubeDone = true;
+			placed = true;
 		}
 	}
 	
