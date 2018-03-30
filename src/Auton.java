@@ -24,7 +24,7 @@ public class Auton {
 	public void Run() {
 		if (firstRun) {
 			firstRun = false;
-			System.out.println("first run");
+			//System.out.println("first run");
 		}
 		//System.out.println("Check " + autonStep);
 		
@@ -386,14 +386,14 @@ public class Auton {
 				System.out.println("Invalid Mode");
 				break;
 		}
-		if( autonStep == "end" && savedAutonStep != "end")
+		if( savedAutonStep != autonStep && autonStep != "place")
 		{
-			System.out.println("end");
+			System.out.println(autonStep);
 		}
-		if( autonStep == "wait" && savedAutonStep != "wait")
-		{
-			System.out.println("wait");
-		}
+		//if( autonStep == "wait" && savedAutonStep != "wait")
+		//{
+			//System.out.println("wait");
+		//}
 				
 		savedAutonStep = autonStep;
 	}	

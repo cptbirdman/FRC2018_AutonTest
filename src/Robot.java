@@ -618,6 +618,7 @@ public class Robot implements RobotInterface {
 	
 	
 	public void autonTurn(double turnAngle, boolean flip) {
+		autonTurnDone = true;
 		/*double temp = Math.signum(turnAngle) * autonSpeed;
 		if (!flip) {
 			setDriveMotors(temp, -temp);

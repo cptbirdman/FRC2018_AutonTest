@@ -13,9 +13,9 @@ public class RunningRobot {
 		r.autonomousInit();
 		
 		r.switchSide = "right";
-		r.autonModeRight = "crossPlace";
-		r.autonModeLeft = "crossPlace";
-		r.robotPosition = 3;
+		r.autonModeRight = "place";
+		r.autonModeLeft = "place";
+		r.robotPosition = 2;
 		r.switchPosition = "front";
 		r.autonAlliance = "blue";
 		r.autonWait = 1.0;
